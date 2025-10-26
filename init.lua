@@ -411,7 +411,27 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+
+        pickers = {
+          find_files = {
+            previewer = false,
+            theme = 'dropdown',
+          },
+          lsp_code_actions = {
+            theme = 'cursor',
+          },
+          code_action = {
+            theme = 'cursor',
+          },
+          buffers = {
+            previewer = false,
+            theme = 'dropdown',
+          },
+          lsp_workspace_diagnostics = {
+            theme = 'dropdown',
+          },
+        },
+
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -868,14 +888,22 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'navarasu/onedark.nvim',
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require('onedark').setup {
-        style = 'darker',
-      }
-      -- Enable theme
-      require('onedark').load()
+    --   'navarasu/onedark.nvim',
+    --   priority = 1000, -- make sure to load this before all the other start plugins
+    --   config = function()
+    --     require('onedark').setup {
+    --       style = 'darker',
+    --     }
+    --     -- Enable theme
+    --     require('onedark').load()
+    --   end,
+    'tiagovla/tokyodark.nvim',
+    opts = {
+      -- custom options here
+    },
+    config = function(_, opts)
+      require('tokyodark').setup(opts) -- calling setup is optional
+      vim.cmd [[colorscheme tokyodark]]
     end,
   },
 
