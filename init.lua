@@ -417,6 +417,10 @@ require('lazy').setup({
             previewer = false,
             theme = 'dropdown',
           },
+          lsp_document_symbols = {
+            previewer = false,
+            theme = 'dropdown',
+          },
           lsp_code_actions = {
             theme = 'cursor',
           },
@@ -678,6 +682,8 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        -- copilot.lua only works with its own copilot lsp server
+        copilot = { enabled = false },
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -816,6 +822,7 @@ require('lazy').setup({
         opts = {},
       },
       'folke/lazydev.nvim',
+      'fang2hou/blink-copilot',
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
@@ -860,11 +867,23 @@ require('lazy').setup({
         documentation = { auto_show = false, auto_show_delay_ms = 500 },
       },
 
+      -- copilot
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'copilot' },
         providers = {
-          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
+            score_offset = 100,
+            async = true,
+          },
         },
+
+        -- sources = {
+        --   default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        --   providers = {
+        --     lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        --   },
       },
 
       snippets = { preset = 'luasnip' },
